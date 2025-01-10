@@ -208,6 +208,7 @@ const issueTemplates = {
         { label: "Additional comments & taken actions:", type: "textarea" }
     ]
 };
+const form = document.getElementById("template-form");
 
 document.getElementById("issue-type").addEventListener("change", function () {
     const issueType = this.value;
