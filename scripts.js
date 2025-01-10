@@ -247,6 +247,15 @@ document.getElementById("issue-type").addEventListener("change", function () {
             const input = document.createElement("input");
             input.type = "text";
             input.setAttribute("label", field);
+            input.placeholder = `Enter ${field.toLowerCase()}`;
+
+            input.addEventListener("input", () => {
+                if (field === "Phonenumber:" && isNaN(input.value)) {
+                    input.style.borderColor = "red";
+                } else {
+                    input.style.borderColor = "";
+                }
+            });
 
             div.appendChild(label);
             div.appendChild(input);
@@ -258,26 +267,67 @@ document.getElementById("issue-type").addEventListener("change", function () {
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    
+    // Remove previous error messages
+    dynamicFieldsDiv.querySelectorAll(".error").forEach(err => err.remove());
+    let hasError = false;
 
     const priority = document.getElementById("priority").value;
     const issueType = document.getElementById("issue-type").value;
     const inputs = dynamicFieldsDiv.querySelectorAll("input");
 
     if (!priority || !issueType) {
-        alert("Please fill out all fields.");
+        alert("Please fill out Priority and Issue Type.");
         return;
     }
 
-    let generatedTemplate = `Priority: ${priority}\n\n`;
-
     inputs.forEach(input => {
-        const label = input.previousElementSibling.textContent;
-        const value = input.value;
-        generatedTemplate += `${label} ${value}\n`;
+        if (!input.value) {
+            hasError = true;
+            const errorMessage = document.createElement("div");
+            errorMessage.textContent = "This field is required.";
+            errorMessage.classList.add("error");
+            errorMessage.style.color = "red";
+            errorMessage.style.fontSize = "12px";
+            input.parentElement.appendChild(errorMessage);
+            input.style.borderColor = "red";
+        } else {
+            input.style.borderColor = ""; // Clear error highlight
+        }
     });
 
-    templateOutput.textContent = generatedTemplate;
+    if (hasError) return;
 
-    updateSummary();
+    // Show spinner during generation
+    const spinner = document.createElement("div");
+    spinner.classList.add("spinner");
+    spinner.textContent = "Generating template...";
+    document.body.appendChild(spinner);
+
+    setTimeout(() => {
+        spinner.remove(); // Remove spinner after 1 second
+
+        let generatedTemplate = `Priority: ${priority}\n\n`;
+
+        inputs.forEach(input => {
+            const label = input.previousElementSibling.textContent;
+            const value = input.value;
+            generatedTemplate += `${label} ${value}\n`;
+        });
+
+        templateOutput.textContent = generatedTemplate;
+        
+        // Success message
+        const successMessage = document.createElement("div");
+        successMessage.textContent = "Template generated successfully!";
+        successMessage.style.color = "green";
+        document.body.appendChild(successMessage);
+
+        setTimeout(() => {
+            successMessage.remove();
+        }, 3000);
+
+        updateSummary();
+    }, 1000);
 });
 
