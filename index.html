@@ -162,7 +162,7 @@
             <div id="dynamic-fields">
                 <!-- Dynamic fields will be inserted here based on issue type -->
             </div>
-            <button type="button" id="generate-template-button">Generate Template</button>
+            <button type="submit">Generate Template</button>
         </form>
     </div>
     <div class="output-section">
@@ -189,36 +189,31 @@
         }
     });
 
-	document.getElementById("issue-type").addEventListener("change", function () {
-    const issueType = this.value;
-    const dynamicFieldsDiv = document.getElementById("dynamic-fields");
-    dynamicFieldsDiv.innerHTML = ""; // Clear existing fields
+    document.getElementById("issue-type").addEventListener("change", function () {
+        const issueType = this.value;
+        const dynamicFieldsDiv = document.getElementById("dynamic-fields");
+        dynamicFieldsDiv.innerHTML = "";
 
-    if (issueTemplates[issueType]) {
-        // Generate fields dynamically
-        issueTemplates[issueType].forEach(field => {
-            const div = document.createElement("div");
-            div.classList.add("form-group");
+        if (issueTemplates[issueType]) {
+            issueTemplates[issueType].forEach(field => {
+                const div = document.createElement("div");
+                div.classList.add("form-group");
 
-            const label = document.createElement("label");
-            label.textContent = field;
+                const label = document.createElement("label");
+                label.textContent = field;
 
-            const input = document.createElement("input");
-            input.type = "text";
-            input.setAttribute("label", field);
+                const input = document.createElement("input");
+                input.type = "text";
+                input.setAttribute("label", field);
 
-            div.appendChild(label);
-            div.appendChild(input);
-            dynamicFieldsDiv.appendChild(div);
-        });
-
-        attachFieldListeners(); // Add listeners to new inputs
-    } else {
-        console.error(`No template found for issue type: ${issueType}`);
-    }
-
-    updateSummary(); // Update summary with new values
-});
+                div.appendChild(label);
+                div.appendChild(input);
+                dynamicFieldsDiv.appendChild(div);
+            });
+        }
+        attachFieldListeners(); // Add listeners to the new inputs
+        updateSummary(); // Update the summary with new fields
+    });
 
     function attachFieldListeners() {
         const dynamicFieldsDiv = document.getElementById("dynamic-fields");
@@ -239,7 +234,9 @@
         document.getElementById("summary-bar").value = `${priority} || ${customer} || ${accessID} || ${issueType}`;
     }
 
-    document.getElementById("generate-template-button").addEventListener("click", () => {
+    document.getElementById("template-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+
         const priority = document.getElementById("priority").value;
         const issueType = document.getElementById("issue-type").value;
         const inputs = document.querySelectorAll("#dynamic-fields input");
