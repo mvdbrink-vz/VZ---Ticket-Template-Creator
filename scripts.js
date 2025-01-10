@@ -209,6 +209,7 @@ const issueTemplates = {
     ]
 };
 const form = document.getElementById("template-form");
+const dynamicFieldsDiv = document.getElementById("dynamic-fields");
 
 document.getElementById("issue-type").addEventListener("change", function () {
     const issueType = this.value;
