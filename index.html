@@ -214,41 +214,59 @@
         updateSummary();
     });
 
-    function updateSummary() {
-        const priority = document.getElementById("priority").value;
-        const issueType = document.getElementById("issue-type").value;
-        const customer = document
-            .querySelector("input[label='Company name:']")
-            ?.value || "Customer";
-        const accessID = document
-            .querySelector("input[label='Access ID:']")
-            ?.value || "Access ID";
+function updateSummary() {
+    const priority = document.getElementById("priority").value || "Priority";
+    const issueType = document.getElementById("issue-type").value || "Issue Type";
 
-        document.getElementById("summary-bar").value = `${priority || "Priority"} || ${customer} || ${accessID} || ${issueType || "Issue Type"}`;
-    }
+    // Get values dynamically from the input fields
+    const customer = document.querySelector("input[label='Company name:']")?.value || "Customer";
+    const accessID = document.querySelector("input[label='Access ID:']")?.value || "Access ID";
 
-    document.getElementById("template-form").addEventListener("submit", (e) => {
-        e.preventDefault();
+    // Update the summary bar
+    document.getElementById("summary-bar").value = `${priority} || ${customer} || ${accessID} || ${issueType}`;
+}
 
-        const priority = document.getElementById("priority").value;
-        const issueType = document.getElementById("issue-type").value;
-        const inputs = document.querySelectorAll("#dynamic-fields input");
+// Attach event listeners to dynamically update the summary bar
+document.getElementById("priority").addEventListener("change", updateSummary);
+document.getElementById("issue-type").addEventListener("change", updateSummary);
 
-        if (!priority || !issueType) {
-            alert("Please fill out all fields.");
-            return;
-        }
+// Dynamically add event listeners to input fields when the template is loaded
+function attachFieldListeners() {
+    const dynamicFieldsDiv = document.getElementById("dynamic-fields");
+    const inputs = dynamicFieldsDiv.querySelectorAll("input");
 
-        let generatedTemplate = `Priority: ${priority}\n\n`;
+    inputs.forEach(input => {
+        input.addEventListener("input", updateSummary);
+    });
+}
 
-        inputs.forEach(input => {
-            const label = input.previousElementSibling.textContent;
-            const value = input.value;
-            generatedTemplate += `${label} ${value}\n`;
+// Update the attachFieldListeners call when the issue type changes
+document.getElementById("issue-type").addEventListener("change", function () {
+    const issueType = this.value;
+    const dynamicFieldsDiv = document.getElementById("dynamic-fields");
+    dynamicFieldsDiv.innerHTML = "";
+
+    if (issueTemplates[issueType]) {
+        issueTemplates[issueType].forEach(field => {
+            const div = document.createElement("div");
+            div.classList.add("form-group");
+
+            const label = document.createElement("label");
+            label.textContent = field;
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.setAttribute("label", field);
+
+            div.appendChild(label);
+            div.appendChild(input);
+            dynamicFieldsDiv.appendChild(div);
         });
 
-        document.getElementById("template-output").textContent = generatedTemplate;
-    });
+        attachFieldListeners(); // Add listeners to the new inputs
+    }
+    updateSummary(); // Update the summary with new fields
+});
 </script>
 
 </body>
