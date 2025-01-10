@@ -242,15 +242,23 @@ document.getElementById("issue-type").addEventListener("change", function () {
             div.classList.add("form-group");
 
             const label = document.createElement("label");
-            label.textContent = field;
+            label.textContent = field.label || field;
 
-            const input = document.createElement("input");
-            input.type = "text";
-            input.setAttribute("label", field);
-            input.placeholder = `Enter ${field.toLowerCase()}`;
+            let input;
+            if (field.type === "textarea") {
+                input = document.createElement("textarea");
+                input.rows = 4;
+                input.style.resize = "both";
+            } else {
+                input = document.createElement("input");
+                input.type = "text";
+            }
+
+            input.setAttribute("label", field.label || field);
+            input.placeholder = `Enter ${field.label || field.toLowerCase()}`;
 
             input.addEventListener("input", () => {
-                if (field === "Phonenumber:" && isNaN(input.value)) {
+                if ((field.label || field) === "Phonenumber:" && isNaN(input.value)) {
                     input.style.borderColor = "red";
                 } else {
                     input.style.borderColor = "";
@@ -274,7 +282,7 @@ form.addEventListener("submit", (e) => {
 
     const priority = document.getElementById("priority").value;
     const issueType = document.getElementById("issue-type").value;
-    const inputs = dynamicFieldsDiv.querySelectorAll("input");
+    const inputs = dynamicFieldsDiv.querySelectorAll("input, textarea");
 
     if (!priority || !issueType) {
         alert("Please fill out Priority and Issue Type.");
@@ -330,4 +338,3 @@ form.addEventListener("submit", (e) => {
         updateSummary();
     }, 1000);
 });
-
