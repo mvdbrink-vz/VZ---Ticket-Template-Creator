@@ -114,6 +114,19 @@
             bottom: 0;
             width: 100%;
         }
+        .incident-summary {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+        }
+        .incident-summary h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .incident-summary p {
+            font-size: 14px;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -168,6 +181,10 @@
     <div class="output-section">
         <h2>Generated Template:</h2>
         <div id="template-output"></div>
+        <div class="incident-summary" id="incident-summary">
+            <h3>Incident Summary:</h3>
+            <p id="summary-output"></p>
+        </div>
     </div>
 </div>
 
@@ -268,50 +285,50 @@
             "Occurring since:",
             "Additional comments & taken actions:"
         ],
-		"Telefonie - Quality issues": [
-			"SIPEU:",
-			"Company name:",
-			"Customer ID:",
-			"Street Housenumber:",
-			"ZIP code:",
-			"Technical contact name:",
-			"Technical contact phonenumber:",
-			"Technical contact E-mail:",
-			"CM MAC:",
-			"Gateway:",
-			"IP Address:",
-			"Subnetmasker:",
-			"VTP / KTA:",
-			"Phonenumber:",
-			"Occurring since:",
-			"Issue description:",
-			"Frequency:",
-			"The quality issues occur with:",
-			"Who experiences the quality issues:",
-			"3 Call examples no older than 48 hours:",
-			"Additional comments & taken actions:"
-		],
-		"Data - No Connection": [
-			"Access ID:",
-			"Company name:",
-			"Customer ID:",
-			"Street Housenumber:",
-			"ZIP code:",
-			"Technical contact name:",
-			"Technical contact phonenumber:",
-			"Technical contact E-mail:",
-			"CM MAC:",
-			"Gateway:",
-			"IP Address:",
-			"Subnetmasker:",
-			"VTP / KTA:",
-			"Issue description:",
-			"Business Impact:",
-			"LED status modem:",
-			"Frequency:",
-			"Occurring since:",
-			"Additional comments & taken actions:"
-		],
+        "Telefonie - Quality issues": [
+            "SIPEU:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "CM MAC:",
+            "Gateway:",
+            "IP Address:",
+            "Subnetmasker:",
+            "VTP / KTA:",
+            "Phonenumber:",
+            "Occurring since:",
+            "Issue description:",
+            "Frequency:",
+            "The quality issues occur with:",
+            "Who experiences the quality issues:",
+            "3 Call examples no older than 48 hours:",
+            "Additional comments & taken actions:"
+        ],
+        "Data - No Connection": [
+            "Access ID:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "CM MAC:",
+            "Gateway:",
+            "IP Address:",
+            "Subnetmasker:",
+            "VTP / KTA:",
+            "Issue description:",
+            "Business Impact:",
+            "LED status modem:",
+            "Frequency:",
+            "Occurring since:",
+            "Additional comments & taken actions:"
+        ],
         "Data - Packetloss": [
             "Access ID:",
             "Company name:",
@@ -348,28 +365,28 @@
             "Occurring since:",
             "Additional comments & taken actions:"
         ],
-		"Data - Speed Issues": [
-			"Access ID:",
-			"Company name:",
-			"Customer ID:",
-			"Street Housenumber:",
-			"ZIP code:",
-			"Technical contact name:",
-			"Technical contact phonenumber:",
-			"Technical contact E-mail:",
-			"CM MAC:",
-			"Gateway:",
-			"IP Address:",
-			"Subnetmasker:",
-			"VTP / KTA:",
-			"Measured speed:",
-			"Expected speed:",
-			"Business Impact:",
-			"LED status modem:",
-			"Frequency:",
-			"Occurring since:",
-			"Additional comments & taken actions:"
-		],
+        "Data - Speed Issues": [
+            "Access ID:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "CM MAC:",
+            "Gateway:",
+            "IP Address:",
+            "Subnetmasker:",
+            "VTP / KTA:",
+            "Measured speed:",
+            "Expected speed:",
+            "Business Impact:",
+            "LED status modem:",
+            "Frequency:",
+            "Occurring since:",
+            "Additional comments & taken actions:"
+        ],
         "Data - Reachability IP": [
             "Access ID:",
             "Company name:",
@@ -389,8 +406,8 @@
 
     const form = document.getElementById("template-form");
     const dynamicFieldsDiv = document.getElementById("dynamic-fields");
-    const outputDiv = document.querySelector(".output-section");
     const templateOutput = document.getElementById("template-output");
+    const summaryOutput = document.getElementById("summary-output");
     const summaryBar = document.getElementById("summary-bar");
 
     document.getElementById("issue-type").addEventListener("change", updateSummary);
@@ -400,11 +417,17 @@
         const priority = document.getElementById("priority").value;
         const issueType = document.getElementById("issue-type").value;
         const customer = dynamicFieldsDiv.querySelector("input[label='Company name:']")?.value || "Customer";
-        const accessID = dynamicFieldsDiv.querySelector("input[label='Access ID:']")?.value || "Access ID";
-        summaryBar.value = `${priority || "Priority"} || ${customer} || ${accessID} || ${issueType || "Issue Type"}`;
-    }
+        let accessID = dynamicFieldsDiv.querySelector("input[label='Access ID:']")?.value;
 
-    document.getElementById("issue-type").addEventListener("change", function () {
+        if (!accessID && (issueType.startsWith("Telefonie"))) {
+            accessID = dynamicFieldsDiv.querySelector("input[label='SIPEU:']")?.value || "SIPEU";
+        }
+
+        summaryBar.value = `${priority || "Priority"} || ${customer} || ${accessID || "Access ID"} || ${issueType || "Issue Type"}`;
+        summaryOutput.textContent = `${priority || "Priority"} || ${customer} || ${accessID || "Access ID"} || ${issueType || "Issue Type"}`;
+    }
+	
+        document.getElementById("issue-type").addEventListener("change", function () {
         const issueType = this.value;
         dynamicFieldsDiv.innerHTML = "";
 
@@ -449,8 +472,7 @@
         });
 
         templateOutput.textContent = generatedTemplate;
+
+        updateSummary();
     });
 </script>
-
-</body>
-</html>
