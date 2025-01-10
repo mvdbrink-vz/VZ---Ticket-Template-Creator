@@ -22,7 +22,7 @@ const issueTemplates = {
         "Frequency:",
         "Occurring since:",
         "Example timestamp of when the issue occurred:",
-        "Additional comments & taken actions:"
+        { label: "Additional comments & taken actions:", type: "textarea" }
     ],
         "MultiWifi - No Connection": [
             "Access ID:",
@@ -41,7 +41,7 @@ const issueTemplates = {
             "LED status modem:",
             "Frequency:",
             "Occurring since:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ],
         "Telefonie - Feature Issues": [
             "SIPEU:",
@@ -54,7 +54,7 @@ const issueTemplates = {
             "Technical contact E-mail:",
             "Issue description:",
             "Business Impact:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ],
         "Telefonie - No in- or outgoing calls": [
             "SIPEU:",
@@ -72,7 +72,7 @@ const issueTemplates = {
             "LED status phone:",
             "Frequency:",
             "Occurring since:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ],
         "Telefonie - One way audio": [
             "SIPEU:",
@@ -88,7 +88,7 @@ const issueTemplates = {
             "Business Impact:",
             "Frequency:",
             "Occurring since:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ],
         "Telefonie - Quality issues": [
             "SIPEU:",
@@ -111,7 +111,7 @@ const issueTemplates = {
             "The quality issues occur with:",
             "Who experiences the quality issues:",
             "3 Call examples no older than 48 hours:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ],
         "Data - No Connection": [
             "Access ID:",
@@ -132,7 +132,7 @@ const issueTemplates = {
             "LED status modem:",
             "Frequency:",
             "Occurring since:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ],
         "Data - Packetloss": [
             "Access ID:",
@@ -151,7 +151,7 @@ const issueTemplates = {
             "Packetloss description:",
             "Business Impact:",
             "Occurring since:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ],
         "Data - Performance Issue": [
             "Access ID:",
@@ -168,7 +168,7 @@ const issueTemplates = {
             "Performance issue description:",
             "Business Impact:",
             "Occurring since:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ],
         "Data - Speed Issues": [
             "Access ID:",
@@ -190,7 +190,7 @@ const issueTemplates = {
             "LED status modem:",
             "Frequency:",
             "Occurring since:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ],
         "Data - Reachability IP": [
             "Access ID:",
@@ -205,7 +205,7 @@ const issueTemplates = {
             "Reachability issue description:",
             "Business Impact:",
             "Occurring since:",
-            "Additional comments & taken actions:"
+            { label: "Additional comments & taken actions:", type: "textarea" }
         ]
 };
 
@@ -242,21 +242,21 @@ document.getElementById("issue-type").addEventListener("change", function () {
             div.classList.add("form-group");
 
             const label = document.createElement("label");
-            label.textContent = field.label || field;
+            label.textContent = field.label;
 
             let input;
             if (field.type === "textarea") {
                 input = document.createElement("textarea");
-                input.rows = 4; // Default rows
-                input.style.resize = "both"; // Enable resizing
-                input.style.minHeight = "80px"; // Minimum height for clarity
+                input.rows = 4; // Default height
+                input.style.resize = "both"; // Allow resizing
+                input.style.minHeight = "80px"; // Minimum height
             } else {
                 input = document.createElement("input");
                 input.type = "text";
             }
 
-            input.setAttribute("label", field.label || field);
-            input.placeholder = `Enter ${field.label || field.toLowerCase()}`;
+            input.setAttribute("label", field.label);
+            input.placeholder = `Enter ${field.label.toLowerCase()}`;
 
             div.appendChild(label);
             div.appendChild(input);
