@@ -28,7 +28,7 @@
             padding: 6px;
             border: none;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 12px;
         }
         .summary-bar {
             display: flex;
@@ -71,7 +71,7 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             white-space: pre-wrap;
-            font-size: 14px;
+            font-size: 12px;
         }
         .form-group {
             display: flex;
@@ -83,14 +83,14 @@
             flex: 1;
             font-weight: bold;
             margin-right: 8px;
-            font-size: 14px;
+            font-size: 12px;
         }
         .form-group input, .form-group textarea {
             flex: 2;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 12px;
         }
         button {
             background-color: red;
@@ -99,7 +99,7 @@
             padding: 10px 15px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             transition: background-color 0.3s;
         }
         button:hover {
@@ -176,22 +176,236 @@
 </footer>
 
 <script>
-    let issueTemplates = {};
+    const issueTemplates = {
+        "MultiWifi - Hinder": [
+            "Access ID:",
+            "MultiWifi ID:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "CM MAC:",
+            "VTP / KTA:",
+            "SSID:",
+            "Access Points Macs & Models:",
+            "Access Points Ruckus status:",
+            "Mac address of an impacted device:",
+            "LED status modem:",
+            "LED status Access Points:",
+            "Issue description:",
+            "Business Impact:",
+            "Frequency:",
+            "Occurring since:",
+            "Example timestamp of when the issue occurred:",
+            "Additional comments & taken actions:"
+        ],
+        "MultiWifi - No Connection": [
+            "Access ID:",
+            "MultiWifi ID:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "CM MAC:",
+            "VTP / KTA:",
+            "Issue description:",
+            "Business Impact:",
+            "LED status modem:",
+            "Frequency:",
+            "Occurring since:",
+            "Additional comments & taken actions:"
+        ],
+        "Telefonie - Feature Issues": [
+            "SIPEU:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "Issue description:",
+            "Business Impact:",
+            "Additional comments & taken actions:"
+        ],
+        "Telefonie - No in- or outgoing calls": [
+            "SIPEU:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "Phonenumber:",
+            "Issue description:",
+            "Business Impact:",
+            "LED status modem:",
+            "LED status phone:",
+            "Frequency:",
+            "Occurring since:",
+            "Additional comments & taken actions:"
+        ],
+        "Telefonie - One way audio": [
+            "SIPEU:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "Phonenumber:",
+            "Issue description:",
+            "Business Impact:",
+            "Frequency:",
+            "Occurring since:",
+            "Additional comments & taken actions:"
+        ],
+		"Telefonie - Quality issues": [
+			"SIPEU:",
+			"Company name:",
+			"Customer ID:",
+			"Street Housenumber:",
+			"ZIP code:",
+			"Technical contact name:",
+			"Technical contact phonenumber:",
+			"Technical contact E-mail:",
+			"CM MAC:",
+			"Gateway:",
+			"IP Address:",
+			"Subnetmasker:",
+			"VTP / KTA:",
+			"Phonenumber:",
+			"Occurring since:",
+			"Issue description:",
+			"Frequency:",
+			"The quality issues occur with:",
+			"Who experiences the quality issues:",
+			"3 Call examples no older than 48 hours:",
+			"Additional comments & taken actions:"
+		],
+		"Data - No Connection": [
+			"Access ID:",
+			"Company name:",
+			"Customer ID:",
+			"Street Housenumber:",
+			"ZIP code:",
+			"Technical contact name:",
+			"Technical contact phonenumber:",
+			"Technical contact E-mail:",
+			"CM MAC:",
+			"Gateway:",
+			"IP Address:",
+			"Subnetmasker:",
+			"VTP / KTA:",
+			"Issue description:",
+			"Business Impact:",
+			"LED status modem:",
+			"Frequency:",
+			"Occurring since:",
+			"Additional comments & taken actions:"
+		],
+        "Data - Packetloss": [
+            "Access ID:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "CM MAC:",
+            "Gateway:",
+            "IP Address:",
+            "Subnetmasker:",
+            "VTP / KTA:",
+            "Packetloss description:",
+            "Business Impact:",
+            "Occurring since:",
+            "Additional comments & taken actions:"
+        ],
+        "Data - Performance Issue": [
+            "Access ID:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "CM MAC:",
+            "Gateway:",
+            "IP Address:",
+            "Performance issue description:",
+            "Business Impact:",
+            "Occurring since:",
+            "Additional comments & taken actions:"
+        ],
+		"Data - Speed Issues": [
+			"Access ID:",
+			"Company name:",
+			"Customer ID:",
+			"Street Housenumber:",
+			"ZIP code:",
+			"Technical contact name:",
+			"Technical contact phonenumber:",
+			"Technical contact E-mail:",
+			"CM MAC:",
+			"Gateway:",
+			"IP Address:",
+			"Subnetmasker:",
+			"VTP / KTA:",
+			"Measured speed:",
+			"Expected speed:",
+			"Business Impact:",
+			"LED status modem:",
+			"Frequency:",
+			"Occurring since:",
+			"Additional comments & taken actions:"
+		],
+        "Data - Reachability IP": [
+            "Access ID:",
+            "Company name:",
+            "Customer ID:",
+            "Street Housenumber:",
+            "ZIP code:",
+            "Technical contact name:",
+            "Technical contact phonenumber:",
+            "Technical contact E-mail:",
+            "IP address impacted:",
+            "Reachability issue description:",
+            "Business Impact:",
+            "Occurring since:",
+            "Additional comments & taken actions:"
+        ]
+    };
 
-    // Fetch issueTemplates.json on page load
-    document.addEventListener("DOMContentLoaded", async () => {
-        try {
-            const response = await fetch("issueTemplates.json");
-            issueTemplates = await response.json();
-            console.log("Templates loaded successfully", issueTemplates);
-        } catch (error) {
-            console.error("Error loading issue templates:", error);
-        }
-    });
+    const form = document.getElementById("template-form");
+    const dynamicFieldsDiv = document.getElementById("dynamic-fields");
+    const outputDiv = document.querySelector(".output-section");
+    const templateOutput = document.getElementById("template-output");
+    const summaryBar = document.getElementById("summary-bar");
+
+    document.getElementById("issue-type").addEventListener("change", updateSummary);
+    document.getElementById("priority").addEventListener("change", updateSummary);
+
+    function updateSummary() {
+        const priority = document.getElementById("priority").value;
+        const issueType = document.getElementById("issue-type").value;
+        const customer = dynamicFieldsDiv.querySelector("input[label='Company name:']")?.value || "Customer";
+        const accessID = dynamicFieldsDiv.querySelector("input[label='Access ID:']")?.value || "Access ID";
+        summaryBar.value = `${priority || "Priority"} || ${customer} || ${accessID} || ${issueType || "Issue Type"}`;
+    }
 
     document.getElementById("issue-type").addEventListener("change", function () {
         const issueType = this.value;
-        const dynamicFieldsDiv = document.getElementById("dynamic-fields");
         dynamicFieldsDiv.innerHTML = "";
 
         if (issueTemplates[issueType]) {
@@ -211,35 +425,15 @@
                 dynamicFieldsDiv.appendChild(div);
             });
         }
-        attachFieldListeners(); // Add listeners to the new inputs
-        updateSummary(); // Update the summary with new fields
+        updateSummary();
     });
 
-    function attachFieldListeners() {
-        const dynamicFieldsDiv = document.getElementById("dynamic-fields");
-        const inputs = dynamicFieldsDiv.querySelectorAll("input");
-
-        inputs.forEach(input => {
-            input.addEventListener("input", updateSummary);
-        });
-    }
-
-    function updateSummary() {
-        const priority = document.getElementById("priority").value || "Priority";
-        const issueType = document.getElementById("issue-type").value || "Issue Type";
-
-        const customer = document.querySelector("input[label='Company name:']")?.value || "Customer";
-        const accessID = document.querySelector("input[label='Access ID:']")?.value || "Access ID";
-
-        document.getElementById("summary-bar").value = `${priority} || ${customer} || ${accessID} || ${issueType}`;
-    }
-
-    document.getElementById("template-form").addEventListener("submit", (e) => {
+    form.addEventListener("submit", (e) => {
         e.preventDefault();
 
         const priority = document.getElementById("priority").value;
         const issueType = document.getElementById("issue-type").value;
-        const inputs = document.querySelectorAll("#dynamic-fields input");
+        const inputs = dynamicFieldsDiv.querySelectorAll("input");
 
         if (!priority || !issueType) {
             alert("Please fill out all fields.");
@@ -254,7 +448,7 @@
             generatedTemplate += `${label} ${value}\n`;
         });
 
-        document.getElementById("template-output").textContent = generatedTemplate;
+        templateOutput.textContent = generatedTemplate;
     });
 </script>
 
