@@ -234,7 +234,7 @@ function updateSummary() {
 
 document.getElementById("issue-type").addEventListener("change", function () {
     const issueType = this.value;
-    dynamicFieldsDiv.innerHTML = "";
+    dynamicFieldsDiv.innerHTML = ""; // Clear previous fields
 
     if (issueTemplates[issueType]) {
         issueTemplates[issueType].forEach(field => {
@@ -247,8 +247,9 @@ document.getElementById("issue-type").addEventListener("change", function () {
             let input;
             if (field.type === "textarea") {
                 input = document.createElement("textarea");
-                input.rows = 4;
-                input.style.resize = "both";
+                input.rows = 4; // Default rows
+                input.style.resize = "both"; // Enable resizing
+                input.style.minHeight = "80px"; // Minimum height for clarity
             } else {
                 input = document.createElement("input");
                 input.type = "text";
@@ -256,14 +257,6 @@ document.getElementById("issue-type").addEventListener("change", function () {
 
             input.setAttribute("label", field.label || field);
             input.placeholder = `Enter ${field.label || field.toLowerCase()}`;
-
-            input.addEventListener("input", () => {
-                if ((field.label || field) === "Phonenumber:" && isNaN(input.value)) {
-                    input.style.borderColor = "red";
-                } else {
-                    input.style.borderColor = "";
-                }
-            });
 
             div.appendChild(label);
             div.appendChild(input);
