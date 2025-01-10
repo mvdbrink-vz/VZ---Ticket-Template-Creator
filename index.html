@@ -156,13 +156,19 @@
     </div>
 </div>
 
-<div class="form-section">
-    <form id="template-form" onsubmit="return false;">
-        <div id="dynamic-fields">
-            <!-- Dynamic fields will be inserted here based on issue type -->
-        </div>
-        <button type="submit">Generate Template</button>
-    </form>
+<div class="container">
+    <div class="form-section">
+        <form id="template-form">
+            <div id="dynamic-fields">
+                <!-- Dynamic fields will be inserted here based on issue type -->
+            </div>
+            <button type="button" id="generate-template-button">Generate Template</button>
+        </form>
+    </div>
+    <div class="output-section">
+        <h2>Generated Template:</h2>
+        <div id="template-output"></div>
+    </div>
 </div>
 
 <footer>
@@ -229,25 +235,25 @@
     }
 
     document.getElementById("generate-template-button").addEventListener("click", () => {
-    const priority = document.getElementById("priority").value;
-    const issueType = document.getElementById("issue-type").value;
-    const inputs = document.querySelectorAll("#dynamic-fields input");
+        const priority = document.getElementById("priority").value;
+        const issueType = document.getElementById("issue-type").value;
+        const inputs = document.querySelectorAll("#dynamic-fields input");
 
-    if (!priority || !issueType) {
-        alert("Please fill out all fields.");
-        return;
-    }
+        if (!priority || !issueType) {
+            alert("Please fill out all fields.");
+            return;
+        }
 
-    let generatedTemplate = `Priority: ${priority}\n\n`;
+        let generatedTemplate = `Priority: ${priority}\n\n`;
 
-    inputs.forEach(input => {
-        const label = input.previousElementSibling.textContent;
-        const value = input.value;
-        generatedTemplate += `${label} ${value}\n`;
+        inputs.forEach(input => {
+            const label = input.previousElementSibling.textContent;
+            const value = input.value;
+            generatedTemplate += `${label} ${value}\n`;
+        });
+
+        document.getElementById("template-output").textContent = generatedTemplate;
     });
-
-    document.getElementById("template-output").textContent = generatedTemplate;
-});
 </script>
 
 </body>
