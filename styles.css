@@ -85,6 +85,15 @@ body {
     border-radius: 4px;
     font-size: 12px;
 }
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: both;
+    min-height: 80px;
+}
 textarea {
     width: 100%; /* Makes the textarea take the full width of its container */
     padding: 8px; /* Adds spacing inside the textarea */
