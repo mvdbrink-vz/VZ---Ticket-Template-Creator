@@ -209,29 +209,6 @@ const issueTemplates = {
     ]
 };
 
-const form = document.getElementById("template-form");
-const dynamicFieldsDiv = document.getElementById("dynamic-fields");
-const templateOutput = document.getElementById("template-output");
-const summaryOutput = document.getElementById("summary-output");
-const summaryBar = document.getElementById("summary-bar");
-
-document.getElementById("issue-type").addEventListener("change", updateSummary);
-document.getElementById("priority").addEventListener("change", updateSummary);
-
-function updateSummary() {
-    const priority = document.getElementById("priority").value;
-    const issueType = document.getElementById("issue-type").value;
-    const customer = dynamicFieldsDiv.querySelector("input[label='Company name:']")?.value || "Customer";
-    let accessID = dynamicFieldsDiv.querySelector("input[label='Access ID:']")?.value;
-
-    if (!accessID && (issueType.startsWith("Telefonie"))) {
-        accessID = dynamicFieldsDiv.querySelector("input[label='SIPEU:']")?.value || "SIPEU";
-    }
-
-    summaryBar.value = `${priority || "Priority"} || ${customer} || ${accessID || "Access ID"} || ${issueType || "Issue Type"}`;
-    summaryOutput.textContent = `${priority || "Priority"} || ${customer} || ${accessID || "Access ID"} || ${issueType || "Issue Type"}`;
-}
-
 document.getElementById("issue-type").addEventListener("change", function () {
     const issueType = this.value;
     dynamicFieldsDiv.innerHTML = ""; // Clear previous fields
@@ -322,17 +299,4 @@ form.addEventListener("submit", (e) => {
     });
 
     templateOutput.textContent = generatedTemplate;
-        
-        // Success message
-        const successMessage = document.createElement("div");
-        successMessage.textContent = "Template generated successfully!";
-        successMessage.style.color = "green";
-        document.body.appendChild(successMessage);
-
-        setTimeout(() => {
-            successMessage.remove();
-        }, 3000);
-
-        updateSummary();
-    }, 1000);
 });
