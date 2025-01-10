@@ -85,6 +85,15 @@ body {
     border-radius: 4px;
     font-size: 12px;
 }
+textarea {
+    width: 100%; /* Makes the textarea take the full width of its container */
+    padding: 8px; /* Adds spacing inside the textarea */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 14px; /* Text size */
+    resize: both; /* Allows resizing in both horizontal and vertical directions */
+    min-height: 80px; /* Ensures it’s taller than a typical input field by default */
+}
 button {
     background-color: red;
     color: white;
