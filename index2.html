@@ -48,19 +48,13 @@
 
 <div class="container">
     <div class="form-section">
-    <form id="template-form">
-        <div id="dynamic-fields">
-            <!-- Other dynamically generated or static fields -->
-            
-            <!-- Add this for the "Additional comments & taken actions:" field -->
-            <div class="form-group">
-                <label for="additional-comments">Additional comments & taken actions:</label>
-                <textarea id="additional-comments" rows="4" style="resize: both; min-height: 80px;"></textarea>
+        <form id="template-form">
+            <div id="dynamic-fields">
+                <!-- Dynamic fields will be inserted here based on issue type -->
             </div>
-        </div>
-        <button type="submit">Generate Template</button>
-    </form>
-</div>
+            <button type="submit">Generate Template</button>
+        </form>
+    </div>
     <div class="output-section">
         <h2>Generated Template:</h2>
         <div id="template-output"></div>
